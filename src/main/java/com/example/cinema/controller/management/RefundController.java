@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-@Service
+import javax.annotation.Resource;
+
 @RestController
 public class RefundController {
-    @Autowired
+    @Resource
     private RefundService refundService;
+
     @RequestMapping("/refund/add")
     public ResponseVO addRefund(@RequestBody RefundVO formData){
         return refundService.addRefund(formData);

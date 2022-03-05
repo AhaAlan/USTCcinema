@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-/**
- * created by jafari
- * date：2021/11/06
- * HallController
- */
+
 @RestController
 public class HallController {
     @Resource

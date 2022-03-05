@@ -5,7 +5,6 @@ import com.example.cinema.bean.base.ResponseVO;
 import com.example.cinema.bean.vo.ScheduleBatchDeleteForm;
 import com.example.cinema.bean.vo.ScheduleForm;
 import com.example.cinema.bean.vo.ScheduleViewForm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -31,7 +30,7 @@ public class ScheduleController {
 
     @RequestMapping(value = "/schedule/search", method = RequestMethod.GET)
     public ResponseVO searchSchedule(@RequestParam int hallId, @RequestParam Date startDate){
-        //这里传递startDate参数时，前端传的是用/分隔的时间，例如startDate=2019/04/12
+        //这里传递startDate参数时，前端传的是用/分隔的时间，例如startDate=2019/04/12，所以在服务类里面进行格式统一
         return scheduleService.searchScheduleSevenDays(hallId, startDate);
     }
 
@@ -60,7 +59,5 @@ public class ScheduleController {
     public ResponseVO getScheduleById(@PathVariable int id){
         return scheduleService.getScheduleById(id);
     }
-
-
 
 }

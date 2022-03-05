@@ -8,14 +8,16 @@ import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 /**
  * 电影管理
  */
 @RestController
 public class MovieController {
-    @Autowired
+    @Resource
     private MovieService movieService;
-    @Autowired
+    @Resource
     private MovieLikeService movieLikeService;
 
     @RequestMapping(value = "/movie/add", method = RequestMethod.POST)

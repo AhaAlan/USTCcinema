@@ -4,15 +4,15 @@ package com.example.cinema.controller.management;
 import com.example.cinema.service.management.ScrollBarService;
 import com.example.cinema.bean.base.ResponseVO;
 import com.example.cinema.bean.vo.ScrollBarVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import javax.annotation.Resource;
 
-@Service
 @RestController
 public class ScrollBarController {
-    @Autowired
+    @Resource
     private ScrollBarService scrollBarService;
+
     @RequestMapping("/scroll/bar/add")
     public ResponseVO addHomePageContent(@RequestBody ScrollBarVO formData){
         return scrollBarService.addScrollBarContent(formData);
