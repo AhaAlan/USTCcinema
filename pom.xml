@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>cinema</artifactId>
+    <artifactId>USTCcinema</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cinema</name>
-    <description>Cinema project for ustc</description>
+    <name>USTCcinema</name>
+    <description>Cinema project for USTC</description>
 
     <properties>
         <java.version>1.8</java.version>

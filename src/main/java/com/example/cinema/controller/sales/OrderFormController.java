@@ -1,7 +1,7 @@
 package com.example.cinema.controller.sales;
 
-import com.example.cinema.bl.sales.OrderFormService;
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.service.sales.OrderFormService;
+import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

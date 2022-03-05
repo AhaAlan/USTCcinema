@@ -1,8 +1,8 @@
 package com.example.cinema.controller.management;
 
-import com.example.cinema.bl.management.RefundService;
-import com.example.cinema.vo.RefundVO;
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.service.management.RefundService;
+import com.example.cinema.bean.vo.RefundVO;
+import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
 package com.example.cinema.controller.promotion;
 
-import com.example.cinema.bl.promotion.ActivityService;
-import com.example.cinema.vo.ActivityForm;
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.service.promotion.ActivityService;
+import com.example.cinema.bean.vo.ActivityForm;
+import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

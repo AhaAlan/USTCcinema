@@ -1,10 +1,10 @@
 package com.example.cinema.controller.management;
 
-import com.example.cinema.bl.management.ScheduleService;
-import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.ScheduleBatchDeleteForm;
-import com.example.cinema.vo.ScheduleForm;
-import com.example.cinema.vo.ScheduleViewForm;
+import com.example.cinema.service.management.ScheduleService;
+import com.example.cinema.bean.base.ResponseVO;
+import com.example.cinema.bean.vo.ScheduleBatchDeleteForm;
+import com.example.cinema.bean.vo.ScheduleForm;
+import com.example.cinema.bean.vo.ScheduleViewForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

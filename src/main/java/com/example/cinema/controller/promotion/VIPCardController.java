@@ -1,11 +1,9 @@
 package com.example.cinema.controller.promotion;
 
-import com.example.cinema.bl.promotion.VIPService;
-import com.example.cinema.vo.VIPCardForm;
-import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.VIPInfoVO;
-import com.example.cinema.po.VIPInfo;
-import com.example.cinema.vo.VipForm;
+import com.example.cinema.service.promotion.VIPService;
+import com.example.cinema.bean.vo.VIPCardForm;
+import com.example.cinema.bean.base.ResponseVO;
+import com.example.cinema.bean.vo.VipForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

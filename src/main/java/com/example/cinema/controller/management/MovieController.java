@@ -1,10 +1,10 @@
 package com.example.cinema.controller.management;
 
-import com.example.cinema.bl.statistics.MovieLikeService;
-import com.example.cinema.vo.MovieBatchOffForm;
-import com.example.cinema.vo.MovieForm;
-import com.example.cinema.bl.management.MovieService;
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.service.statistics.MovieLikeService;
+import com.example.cinema.bean.vo.MovieBatchOffForm;
+import com.example.cinema.bean.vo.MovieForm;
+import com.example.cinema.service.management.MovieService;
+import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

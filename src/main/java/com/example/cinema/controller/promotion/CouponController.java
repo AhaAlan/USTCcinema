@@ -1,8 +1,7 @@
 package com.example.cinema.controller.promotion;
 
-import com.example.cinema.bl.promotion.CouponService;
-import com.example.cinema.vo.CouponForm;
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.service.promotion.CouponService;
+import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

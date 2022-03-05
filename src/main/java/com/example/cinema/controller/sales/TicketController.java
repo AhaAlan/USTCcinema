@@ -1,8 +1,8 @@
 package com.example.cinema.controller.sales;
 
-import com.example.cinema.bl.sales.TicketService;
-import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.TicketForm;
+import com.example.cinema.service.sales.TicketService;
+import com.example.cinema.bean.base.ResponseVO;
+import com.example.cinema.bean.vo.TicketForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.example.cinema.controller.statistics;
 
-import com.example.cinema.bl.statistics.CommentService;
-import com.example.cinema.po.Comment;
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.service.statistics.CommentService;
+import com.example.cinema.dao.po.Comment;
+import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

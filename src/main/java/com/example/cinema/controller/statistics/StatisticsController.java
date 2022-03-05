@@ -1,7 +1,7 @@
 package com.example.cinema.controller.statistics;
 
-import com.example.cinema.bl.statistics.StatisticsService;
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.service.statistics.StatisticsService;
+import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

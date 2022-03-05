@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *  拦截器主要用途：进行用户登录状态的拦截，日志的拦截等。
  */
 
+//这是一个配置类
 @Configuration
 public class InterceptorConfiguration implements WebMvcConfigurer {
     public final static String SESSION_KEY = "user";

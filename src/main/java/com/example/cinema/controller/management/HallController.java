@@ -1,10 +1,8 @@
 package com.example.cinema.controller.management;
 
-import com.example.cinema.bl.management.HallService;
-import com.example.cinema.po.Hall;
-import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.ScheduleViewForm;
-import com.example.cinema.vo.SeatForm;
+import com.example.cinema.service.management.HallService;
+import com.example.cinema.dao.po.Hall;
+import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
