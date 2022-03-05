@@ -4,40 +4,26 @@ import com.example.cinema.dao.po.ScheduleItem;
 
 import java.util.Date;
 
+//排片信息类（新增排片所需的信息）对应的VO
 public class ScheduleItemVO {
-    /**
-     * id
-     */
+    //id
     private Integer id;
-    /**
-     * 影厅id
-     */
+    //影厅id
     private Integer hallId;
-    /**
-     * 影厅名称
-     */
+    //影厅名称
     private String hallName;
-    /**
-     * 电影id
-     */
+    //电影id
     private Integer movieId;
-    /**
-     * 电影名
-     */
+    //电影名
     private String movieName;
-    /**
-     * 开始放映时间
-     */
+    //开始放映时间
     private Date startTime;
-    /**
-     * 结束放映时间
-     */
+    //结束放映时间
     private Date endTime;
-    /**
-     * 票价
-     */
+    //票价
     private double fare;
 
+    //转换类：PO转VO
     public ScheduleItemVO(ScheduleItem scheduleItem){
         this.id = scheduleItem.getId();
         this.hallId = scheduleItem.getHallId();

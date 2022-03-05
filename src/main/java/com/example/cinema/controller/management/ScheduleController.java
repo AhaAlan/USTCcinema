@@ -8,6 +8,7 @@ import com.example.cinema.bean.vo.ScheduleViewForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date;
  */
 @RestController
 public class ScheduleController {
-    @Autowired
+    @Resource
     private ScheduleService scheduleService;
 
     @RequestMapping(value = "/schedule/add", method = RequestMethod.POST)
@@ -48,7 +49,6 @@ public class ScheduleController {
     public ResponseVO getScheduleView(){
         return scheduleService.getScheduleView();
     }
-
 
 
     @RequestMapping(value = "/schedule/delete/batch", method = RequestMethod.DELETE)

@@ -1,7 +1,8 @@
 package com.example.cinema.bean.vo;
 
+//包含喜欢人数的电影表单类
 public class ForwardMovieForm {
-
+    //记录喜欢人数
     private int sum;
 
     private  String name;
@@ -31,4 +32,5 @@ public class ForwardMovieForm {
     public void setName(String name) {
         this.name = name;
     }
+
 }

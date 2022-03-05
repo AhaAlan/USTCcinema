@@ -3,9 +3,9 @@ package com.example.cinema.serviceImpl.sales;
 import com.example.cinema.bean.base.ResponseVO;
 import com.example.cinema.bean.vo.*;
 import com.example.cinema.dao.po.*;
+import com.example.cinema.service.management.HallService;
+import com.example.cinema.service.management.ScheduleService;
 import com.example.cinema.service.sales.TicketService;
-import com.example.cinema.serviceImpl.management.hall.HallServiceForBl;
-import com.example.cinema.serviceImpl.management.schedule.ScheduleServiceForBl;
 import com.example.cinema.dao.mapper.promotion.ActivityMapper;
 import com.example.cinema.dao.mapper.promotion.CouponMapper;
 import com.example.cinema.dao.mapper.promotion.VIPCardMapper;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,17 +24,17 @@ import java.util.List;
 @Service
 public class TicketServiceImpl implements TicketService {
 
-    @Autowired
+    @Resource
     TicketMapper ticketMapper;
-    @Autowired
-    ScheduleServiceForBl scheduleService;
-    @Autowired
-    HallServiceForBl hallService;
-    @Autowired
+    @Resource
+    ScheduleService scheduleService;
+    @Resource
+    HallService hallService;
+    @Resource
     CouponMapper couponMapper;
-    @Autowired
+    @Resource
     ActivityMapper activityMapper;
-    @Autowired
+    @Resource
     VIPCardMapper vipCardMapper;
     @Override
     @Transactional

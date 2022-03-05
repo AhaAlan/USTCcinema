@@ -2,8 +2,8 @@ package com.example.cinema.serviceImpl.statistics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.cinema.service.management.MovieService;
 import com.example.cinema.service.statistics.MovieLikeService;
-import com.example.cinema.serviceImpl.management.schedule.MovieServiceForBl;
 import com.example.cinema.dao.mapper.statistics.MovieLikeMapper;
 import com.example.cinema.dao.mapper.user.AccountMapper;
 import com.example.cinema.dao.po.DateLike;
@@ -13,6 +13,8 @@ import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 
 @Service
 public class MovieLikeServiceImpl implements MovieLikeService {
@@ -21,11 +23,11 @@ public class MovieLikeServiceImpl implements MovieLikeService {
     private static final String MOVIE_NOT_EXIST_ERROR_MESSAGE = "电影不存在";
     private static final String User_NOT_EXIST_ERROR_MESSAGE = "用户不存在";
 
-    @Autowired
+    @Resource
     private MovieLikeMapper movieLikeMapper;
-    @Autowired
-    private MovieServiceForBl movieServiceForBl;
-    @Autowired
+    @Resource
+    private MovieService movieService;
+    @Resource
     private AccountMapper accountMapper;
 
     @Override
@@ -45,7 +47,7 @@ public class MovieLikeServiceImpl implements MovieLikeService {
         }
         if (userLikeTheMovie(userId, movieId)) {
             return ResponseVO.buildFailure(ALREADY_LIKE_ERROR_MESSAGE);
-        } else if (movieServiceForBl.getMovieById(movieId) == null) {
+        } else if (movieService.getMovieById(movieId) == null) {
             return ResponseVO.buildFailure(MOVIE_NOT_EXIST_ERROR_MESSAGE);
         }
         else if(flag==1){
@@ -63,7 +65,7 @@ public class MovieLikeServiceImpl implements MovieLikeService {
     public ResponseVO unLikeMovie(int userId, int movieId) {
         if (!userLikeTheMovie(userId, movieId)) {
             return ResponseVO.buildFailure(UNLIKE_ERROR_MESSAGE);
-        } else if (movieServiceForBl.getMovieById(movieId) == null) {
+        } else if (movieService.getMovieById(movieId) == null) {
             return ResponseVO.buildFailure(MOVIE_NOT_EXIST_ERROR_MESSAGE);
         }
         try {

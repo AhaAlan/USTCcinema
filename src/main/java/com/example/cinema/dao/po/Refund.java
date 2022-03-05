@@ -67,6 +67,7 @@ public class Refund {
         this.timeTwoPercent = timeTwoPercent;
     }
 
+    //PO转VO
     public RefundVO getRefundVO(){
         RefundVO refundVO = new RefundVO();
         refundVO.setDeadline(this.deadline);

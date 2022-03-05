@@ -3,8 +3,11 @@ package com.example.cinema.bean.vo;
 import java.util.Date;
 import java.util.List;
 
-public class ScheduleVO {
+//排片信息列表类
+public class ScheduleListVO {
+
     private Date date;
+
     private List<ScheduleItemVO> scheduleItemList;
 
     public Date getDate() {

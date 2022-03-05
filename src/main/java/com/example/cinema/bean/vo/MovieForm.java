@@ -2,6 +2,7 @@ package com.example.cinema.bean.vo;
 
 import java.util.Date;
 
+//电影表单类
 public class MovieForm {
     /**
      * 电影id

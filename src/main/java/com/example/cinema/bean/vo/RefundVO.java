@@ -1,5 +1,6 @@
 package com.example.cinema.bean.vo;
 
+//退款策略VO类
 public class RefundVO {
     private int timeOne;
     private int timeTwo;

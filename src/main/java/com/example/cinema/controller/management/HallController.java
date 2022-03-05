@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
  * created by jafari
  * date：2021/11/06
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class HallController {
-    @Autowired
+    @Resource
     private HallService hallService;
 
     @RequestMapping(value = "hall/all", method = RequestMethod.GET) //等价于@GetMapping(value = "hall/all")
@@ -41,7 +43,7 @@ public class HallController {
 
     @RequestMapping(value = "/hall/set", method = RequestMethod.POST)
     public ResponseVO setHallseats(@RequestBody Hall hall){
-        return hallService.setHallseats(hall);
+        return hallService.setHallSeats(hall);
     }
 
     @RequestMapping(value = "/hall/modify", method = RequestMethod.POST)

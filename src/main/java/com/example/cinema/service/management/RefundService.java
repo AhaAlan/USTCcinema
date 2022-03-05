@@ -5,6 +5,9 @@ import com.example.cinema.bean.base.ResponseVO;
 
 
 public interface RefundService {
+    //增加退款策略
     ResponseVO addRefund(RefundVO refund);
+
+    //查询最新的退款策略
     ResponseVO selectLatestRefund();
 }

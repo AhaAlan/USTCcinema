@@ -1,25 +1,25 @@
-package com.example.cinema.serviceImpl.management.schedule;
+package com.example.cinema.serviceImpl.management;
 import java.util.Date;
 
 import com.example.cinema.bean.base.ResponseVO;
 import com.example.cinema.bean.vo.*;
+import com.example.cinema.service.management.HallService;
+import com.example.cinema.service.management.MovieService;
 import com.example.cinema.service.management.ScheduleService;
-import com.example.cinema.serviceImpl.management.hall.HallServiceForBl;
 import com.example.cinema.dao.mapper.management.ScheduleMapper;
 import com.example.cinema.dao.po.Movie;
 import com.example.cinema.dao.po.ScheduleItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by HJZ on 2021/10/20.
- */
+
 @Service
-public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForBl {
+public class ScheduleServiceImpl implements ScheduleService{
     private static final String TIME_CONFLICT_ERROR_MESSAGE = "时间段冲突";
     private static final String CROSS_DAYS_ERROR_MESSAGE = "起止时间不能跨天";
     private static final String DATE_INTERVAL_LESS_THAN_LENGTH_ERROR_MESSAGE = "起止时间段不能少于电影时长或结束时间不能早于开始时间";
@@ -31,14 +31,12 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
     private static final String ID_LIST_NULL_ERROR_MESSAGE = "id列表不可为空";
     private static final String VIEW_CONFLICT_ERROR_MESSAGE = "有排片信息已对观众可见，无法删除或修改";
 
-
-    @Autowired
+    @Resource
     private ScheduleMapper scheduleMapper;
-    @Autowired
-    private MovieServiceForBl movieServiceForBl;
-    @Autowired
-    private HallServiceForBl hallServiceForBl;
-
+    @Resource
+    private MovieService movieService;
+    @Resource
+    private HallService hallService;
 
     @Override
     public ResponseVO addSchedule(ScheduleForm scheduleForm) {
@@ -69,6 +67,7 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
 
             scheduleMapper.updateScheduleById(scheduleForm);
             return ResponseVO.buildSuccess();
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
@@ -80,7 +79,7 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
         try {
             ScheduleItem scheduleItem = scheduleMapper.selectScheduleById(id);
             if(scheduleItem != null){
-                return ResponseVO.buildSuccess(new ScheduleItemVO(scheduleItem));
+                return ResponseVO.buildSuccess(new ScheduleItemVO(scheduleItem));   //PO转VO
             }else{
                 return ResponseVO.buildSuccess(null);
             }
@@ -108,8 +107,8 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
             List<ScheduleItem> scheduleItems = scheduleMapper.selectScheduleByMovieId(movieId);
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
-            Date endDate = getNumDayAfterDate(today, days);
+            Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));   //今天的日期
+            Date endDate = getNumDayAfterDate(today, days); //加上days后为截止时间
 
             List<ScheduleItem> result = new ArrayList<>();
             for(ScheduleItem s : scheduleItems){
@@ -246,12 +245,12 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
             }
 
             //检查影厅是否存在
-            if(hallServiceForBl.getHallById(scheduleForm.getHallId()) == null){
+            if(hallService.getHallById(scheduleForm.getHallId()) == null){
                 return ResponseVO.buildFailure(HALL_NOT_EXIST_ERROR_MESSAGE);
             }
 
             // 检查电影是否存在
-            Movie movie = movieServiceForBl.getMovieById(scheduleForm.getMovieId());
+            Movie movie = movieService.getMovieById(scheduleForm.getMovieId());
             if(movie == null){
                 return ResponseVO.buildFailure(MOVIE_NOT_EXIST_ERROR_MESSAGE);
             }
@@ -292,19 +291,17 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
             if(s.getEndTime().before(endDate) && s.getEndTime().after(today)){
                 return true;
             }
-
         }
-
         return false;
     }
 
-    List<ScheduleVO> getScheduleVOList(int interval,Date startDate, List<ScheduleItem> scheduleItemList ) throws ParseException {
+    List<ScheduleListVO> getScheduleVOList(int interval, Date startDate, List<ScheduleItem> scheduleItemList ) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        List<ScheduleVO> scheduleVOList = new ArrayList<>();
+        List<ScheduleListVO> scheduleListVOList = new ArrayList<>();
         for(int i = 0; i < interval; i++){
             Date date = getNumDayAfterDate(startDate, i);
-            ScheduleVO scheduleVO = new ScheduleVO();
-            scheduleVO.setDate(date);
+            ScheduleListVO scheduleListVO = new ScheduleListVO();
+            scheduleListVO.setDate(date);
             List<ScheduleItemVO> scheduleItems = new ArrayList<>();
             List<ScheduleItemVO> scheduleItemVOList = scheduleItemList2ScheduleItemVOList(scheduleItemList);
             for(ScheduleItemVO scheduleItem : scheduleItemVOList){
@@ -313,12 +310,11 @@ public class ScheduleServiceImpl implements ScheduleService, ScheduleServiceForB
                     scheduleItems.add(scheduleItem);
                 }
             }
-            scheduleVO.setScheduleItemList(scheduleItems);
-            scheduleVOList.add(scheduleVO);
+            scheduleListVO.setScheduleItemList(scheduleItems);
+            scheduleListVOList.add(scheduleListVO);
         }
-        return scheduleVOList;
+        return scheduleListVOList;
     }
-
 
 
     private List<ScheduleItemVO> scheduleItemList2ScheduleItemVOList(List<ScheduleItem> scheduleItemList){
