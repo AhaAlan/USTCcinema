@@ -16,15 +16,21 @@
     </insert>
 
     <select id="selectCardByKind" resultMap="VIPInfo">
-        select * from vip_info where id = #{id}
+        select *
+        from vip_info
+        where id = #{id}
     </select>
 
     <select id="selectCardByKindId" resultType="Integer">
-        select kind from vip_card where kind = #{kind}
+        select kind
+        from vip_card
+        where kind = #{kind}
     </select>
 
     <select id="selectCardById" resultMap="VIPCard">
-        select * from vip_card where id=#{id}
+        select *
+        from vip_card
+        where id=#{id}
     </select>
 
     <update id="updateKindCardById" parameterType="com.example.cinema.bean.vo.VipForm">

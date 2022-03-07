@@ -7,10 +7,12 @@ import com.example.cinema.bean.vo.VipForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController()
+import javax.annotation.Resource;
+
+@RestController
 @RequestMapping("/vip")
 public class VIPCardController {
-    @Autowired
+    @Resource
     VIPService vipService;
 
     @PostMapping("/add/{userId}/{kind}")//增加卡

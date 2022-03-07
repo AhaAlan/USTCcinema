@@ -57,9 +57,11 @@
         <result column="start_time" property="startTime"></result>
         <result column="end_time" property="endTime"></result>
 
+        <!--关联，property应该和model类中从表关联主表的字段名要一致-->
         <association property="coupon" column="coupon_id" select="com.example.cinema.dao.mapper.promotion.CouponMapper.selectById">
         </association>
 
+        <!--为了解决一对多类型的需求，使用collection标签来处理其中的“多”，常表现为在类中的属性为List<>-->
         <collection property="movieList" ofType="com.example.cinema.dao.po.Movie">
             <id column="movie_id" property="id"></id>
             <result column="poster_url" property="posterUrl"></result>
@@ -76,7 +78,6 @@
             <result column="status" property="status"></result>
             <result column="starring" property="starring"></result>
         </collection>
-
     </resultMap>
 
 </mapper>

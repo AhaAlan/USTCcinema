@@ -15,24 +15,26 @@ import com.example.cinema.dao.mapper.sales.TicketMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Service
 public class OrderFormServiceImpl implements OrderFormService {
-    @Autowired
+    @Resource
     OrderFormMapper orderFormMapper;
-    @Autowired
+    @Resource
     TicketMapper ticketMapper;
-    @Autowired
+    @Resource
     ScheduleMapper scheduleMapper;
-    @Autowired
+    @Resource
     CouponMapper couponMapper;
-    @Autowired
+    @Resource
     VIPCardMapper vipCardMapper;
-    @Autowired
+    @Resource
     RefundMapper refundMapper;
+
     @Override
     public ResponseVO addOrderForm(List<Integer> ticketid, int couponId) {
         try{
@@ -41,13 +43,13 @@ public class OrderFormServiceImpl implements OrderFormService {
             for(int i=0;i<ticketid.size();i++){
                 tickets.add(ticketMapper.selectTicketById(ticketid.get(i)));
             }
-            Ticket ticket1 = ticketMapper.selectTicketById(ticketid.get(0));
+            Ticket ticket1 = ticketMapper.selectTicketById(ticketid.get(0));    //ticket1只是用来获取该用户的id
             orderForm.setTime(new Timestamp(new Date().getTime()));
             orderForm.setTickets(tickets);
             orderForm.setUserId(ticket1.getUserId());
             orderForm.setPaypath(0);
             orderForm.setCouponId(couponId);
-            orderForm.setState(0);
+            orderForm.setState(0);//订单状态
             if(ticket1.getState()==1) {
                 orderFormMapper.insertOrderForm(orderForm);
                 orderFormMapper.insertOrderFormAndTickets(orderForm.getOrderformId(),ticketid);
@@ -61,6 +63,7 @@ public class OrderFormServiceImpl implements OrderFormService {
             return ResponseVO.buildFailure("失败");
         }
     }
+
 
     @Override
     public ResponseVO addOrderFormByVipCard(List<Integer> ticketid, int couponId) {
@@ -98,11 +101,11 @@ public class OrderFormServiceImpl implements OrderFormService {
             if(orderForm.getState()==1){
                 return  ResponseVO.buildFailure("该订单已完成退款，不可重复退款");
             }
+            //银行卡付款
             if(orderForm.getPaypath()==0) {
                 orderFormMapper.updateOrderFormState(orderFormId, 1);
                 return ResponseVO.buildSuccess();
-            }
-            else{
+            }else{
                 double refund = 0;
                 int ticketNumber = orderForm.getTickets().size();
                 Ticket ticket1 = orderForm.getTickets().get(0);
@@ -123,17 +126,17 @@ public class OrderFormServiceImpl implements OrderFormService {
                     int deadline = refund1.getDeadline();
                     if (n < deadline) {
                         return ResponseVO.buildFailure("此订单已超过退票最后时间，无法退票");
-                    } else if (n < timeTwo & n >= deadline) {
+                    }else if (n < timeTwo & n >= deadline) {
                         double deadlinePercent = refund1.getDeadlinePercent();
                         vipCardMapper.updateCardBalance(vipcard.getId(), vipcard.getBalance() + refund * deadlinePercent);
                         orderFormMapper.updateOrderFormState(orderFormId, 1);
                         return ResponseVO.buildSuccess("退款成功");
-                    } else if (n < timeOne & n >= timeTwo) {
+                    }else if (n < timeOne & n >= timeTwo) {
                         double timeTwoPercent = refund1.getTimeTwoPercent();
                         vipCardMapper.updateCardBalance(vipcard.getId(), vipcard.getBalance() + refund * timeTwoPercent);
                         orderFormMapper.updateOrderFormState(orderFormId, 1);
                         return ResponseVO.buildSuccess("退款成功");
-                    } else {
+                    }else {
                         double timeOnePercent = refund1.getTimeOnePercent();
                         vipCardMapper.updateCardBalance(vipcard.getId(), vipcard.getBalance() + refund * timeOnePercent);
                         orderFormMapper.updateOrderFormState(orderFormId, 1);
@@ -143,7 +146,7 @@ public class OrderFormServiceImpl implements OrderFormService {
                     Timestamp timeNow = new Timestamp(new Date().getTime());
                     Timestamp timeMovie = new Timestamp(scheduleMapper.selectScheduleById(orderFormMapper.selectOrderFormById(orderFormId).getTickets().get(0).getScheduleId()).getStartTime().getTime());
                     int n = (int) (timeMovie.getTime() - timeNow.getTime());
-                    if(n>0) {
+                    if(n>0){
                         vipCardMapper.updateCardBalance(vipcard.getId(), vipcard.getBalance() + refund);
                         orderFormMapper.updateOrderFormState(orderFormId, 1);
                         return ResponseVO.buildSuccess("退款成功");

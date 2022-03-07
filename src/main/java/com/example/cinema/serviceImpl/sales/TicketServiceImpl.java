@@ -36,6 +36,7 @@ public class TicketServiceImpl implements TicketService {
     ActivityMapper activityMapper;
     @Resource
     VIPCardMapper vipCardMapper;
+
     @Override
     @Transactional
     public ResponseVO addTicket(TicketForm ticketForm) {

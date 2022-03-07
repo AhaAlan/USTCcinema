@@ -11,28 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Created by HJZ on 2021/10/20.
- */
+import javax.annotation.Resource;
+
+
 @Service
 public class ActivityServiceImpl implements ActivityService {
 
-    @Autowired
+    @Resource
     ActivityMapper activityMapper;
-    @Autowired
+
+    @Resource
     CouponService couponService;
 
+    //声明式事务管理 注解实现@Transactional
     @Override
     @Transactional
     public ResponseVO publishActivity(ActivityForm activityForm) {
         try {
-            ResponseVO vo = couponService.addCoupon(activityForm.getCouponForm());
-            Coupon coupon = (Coupon) vo.getContent();
-            Activity activity = new Activity();
+            Activity activity = new Activity(); //新建活动
             activity.setName(activityForm.getName());
             activity.setDescription(activityForm.getName());
             activity.setStartTime(activityForm.getStartTime());
             activity.setEndTime(activityForm.getEndTime());
+            ResponseVO vo = couponService.addCoupon(activityForm.getCouponForm());  //获取优惠券
+            Coupon coupon = (Coupon) vo.getContent();
             activity.setCoupon(coupon);
             activityMapper.insertActivity(activity);
             if(activityForm.getMovieList()!=null&&activityForm.getMovieList().size()!=0){

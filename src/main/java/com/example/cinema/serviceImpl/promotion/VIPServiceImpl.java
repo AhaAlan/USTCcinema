@@ -13,6 +13,7 @@ import com.example.cinema.dao.po.VIPCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,20 +25,21 @@ import java.util.List;
 @Service
 public class VIPServiceImpl implements VIPService {
     private static final String MEMBER_MESSAGE = "该会员卡已经被购买，无法删除或修改";
-    @Autowired
+
+    @Resource
     VIPCardMapper vipCardMapper;
 
-    @Autowired
+    @Resource
     ScheduleMapper scheduleMapper;
 
-    @Autowired
+    @Resource
     TicketMapper ticketMapper;
 
-    @Autowired
+    @Resource
     AccountMapper accountMapper;
 
     @Override
-    public ResponseVO addVIPCard(int userId, int kind) {//增加会员卡号
+    public ResponseVO addVIPCard(int userId, int kind) {
         VIPInfo vipInfo = vipCardMapper.selectCardByKind(kind);
         VIPCard vipCard = new VIPCard();
         vipCard.setUserId(userId);
@@ -60,7 +62,7 @@ public class VIPServiceImpl implements VIPService {
     @Override
     public ResponseVO addVIPInfo(VipForm addMovieForm) {
         try {
-            int key=vipCardMapper.insertNewKindCard(addMovieForm);
+            vipCardMapper.insertNewKindCard(addMovieForm);
             return ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,7 +95,6 @@ public class VIPServiceImpl implements VIPService {
                 return ResponseVO.buildSuccess();
             }
             return ResponseVO.buildFailure(MEMBER_MESSAGE);
-
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
@@ -117,7 +118,7 @@ public class VIPServiceImpl implements VIPService {
             List<VIPCard> vipCards=vipCardMapper.selectAllVipCard();
             for(int i=0;i<100;i++){
                 double sum=0;
-                String name="";
+                String name=""; //会员卡名称
                 int id=0;
                 for(int m=0;m<vipCards.size();m++){
                     if(i==vipCards.get(m).getId()){
@@ -126,8 +127,7 @@ public class VIPServiceImpl implements VIPService {
                             for(int n=0;n<tickets.size();n++){
                                 sum=sum+scheduleMapper.selectScheduleById(tickets.get(n).getScheduleId()).getFare();
                             }
-                        }
-                        else if(tickets.size()==0){
+                        }else if(tickets.size()==0){
                             sum=0;
                         }
                         name=accountMapper.selectUserById(vipCards.get(m).getUserId()).getUsername();

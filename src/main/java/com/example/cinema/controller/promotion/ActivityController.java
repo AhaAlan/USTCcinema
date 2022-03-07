@@ -6,17 +6,20 @@ import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 @RestController
 @RequestMapping("/activity")
 public class ActivityController {
 
-    @Autowired
+    @Resource
     ActivityService activityService;
 
     @PostMapping("/publish")
     public ResponseVO publishActivity(@RequestBody ActivityForm activityForm){
         return activityService.publishActivity(activityForm);
     }
+
     @GetMapping("/get")
     public ResponseVO getActivities(){
         return activityService.getActivities();

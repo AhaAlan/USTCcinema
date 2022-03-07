@@ -19,7 +19,8 @@
     </insert>
 
     <update id="updateOrderFormState">
-        update orderForm set state = #{state} where order_form_id =#{orderFormId}
+        update orderForm set state = #{state}
+        where order_form_id =#{orderFormId}
     </update>
 
     <select id="selectOrderFormById" resultMap="OrderForm">

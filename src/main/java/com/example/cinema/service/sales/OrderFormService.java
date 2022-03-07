@@ -5,11 +5,11 @@ import com.example.cinema.bean.base.ResponseVO;
 import java.util.List;
 
 public interface OrderFormService {
-
+    //新增订单
     ResponseVO addOrderForm(List<Integer> ticketid, int couponId);
-
+    //新增会员订单，其实没差别，因为会员卡不是折扣卡
     ResponseVO addOrderFormByVipCard(List<Integer> ticketid, int couponId);
-
+    //退单
     ResponseVO refund(int orderFormId);
 
     ResponseVO getOrderFormByUser(int userId);
