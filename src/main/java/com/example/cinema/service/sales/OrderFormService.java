@@ -11,8 +11,9 @@ public interface OrderFormService {
     ResponseVO addOrderFormByVipCard(List<Integer> ticketid, int couponId);
     //退单
     ResponseVO refund(int orderFormId);
-
+    //根据用户id获取订单列表
     ResponseVO getOrderFormByUser(int userId);
+    //
     ResponseVO getOrderFormById(int Id);
 
 }

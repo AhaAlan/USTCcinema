@@ -3,34 +3,22 @@ import com.example.cinema.dao.po.ScheduleItem;
 import java.sql.Timestamp;
 
 /**
- * 这个类干嘛用的，存疑
+ * 带有排片信息的TicketVO类
  */
 public class TicketWithScheduleVO {
 
-    /**
-     * 电影票id
-     */
+    //电影票id
     private int id;
-    /**
-     * 用户id
-     */
+    //用户id
     private int userId;
-    /**
-     * 排片id
-     */
+    //排片信息
     private ScheduleItem schedule;
-    /**
-     * 列号
-     */
+
     private int columnIndex;
-    /**
-     * 排号
-     */
+
     private int rowIndex;
 
-    /**
-     * 订单状态
-     */
+    //订单状态
     private String state;
 
     private Timestamp time;

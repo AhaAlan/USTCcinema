@@ -5,12 +5,13 @@ import com.example.cinema.bean.base.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 
 @RestController
 public class StatisticsController {
-    @Autowired
+    @Resource
     private StatisticsService statisticsService;
 
     @RequestMapping(value = "statistics/scheduleRate", method = RequestMethod.GET)

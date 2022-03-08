@@ -8,12 +8,13 @@ import com.example.cinema.dao.mapper.statistics.CommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
 @Service
 public class CommentServiceImpl implements CommentService {
-    @Autowired
+    @Resource
     private CommentMapper commentMapper;
 
     @Override
@@ -23,7 +24,7 @@ public class CommentServiceImpl implements CommentService {
             return ResponseVO.buildSuccess();
         }catch (Exception e){
             e.printStackTrace();
-            return ResponseVO.buildFailure("写评论失败");
+            return ResponseVO.buildFailure("评论发表失败");
         }
     }
 
@@ -34,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
             return ResponseVO.buildSuccess(comments);
         }catch (Exception e){
             e.printStackTrace();
-            return ResponseVO.buildFailure("失败");
+            return ResponseVO.buildFailure("评论显示失败");
         }
     }
 

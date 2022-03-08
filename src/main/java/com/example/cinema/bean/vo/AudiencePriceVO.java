@@ -2,11 +2,11 @@ package com.example.cinema.bean.vo;
 
 import java.util.Date;
 
+//每日客单价VO类
 public class AudiencePriceVO {
+    //当天日期
     private Date date;
-    /**
-     * 客单价
-     */
+    //客单价
     private Double price;
 
     public Date getDate() {

@@ -1,19 +1,14 @@
 package com.example.cinema.bean.vo;
 
+//受欢迎电影VO类
 public class PopularMoviesVO {
-    /**
-     * 电影id
-     */
+    //电影id
     private Integer id;
-    /**
-     * 电影名称
-     */
+
+    //电影名称
     private String name;
 
-    /**
-     * 电影票房
-     * @return
-     */
+    //电影票房
     private Integer boxOffice;
 
 

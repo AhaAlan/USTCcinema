@@ -5,6 +5,7 @@ import com.example.cinema.dao.po.ScheduleItem;
 import java.sql.Timestamp;
 import java.util.List;
 
+//带有排片信息和电影名的订单类
 public class OrderFormWithMovieScheduleCouponVO {
     private int userId;
     private String movieName;

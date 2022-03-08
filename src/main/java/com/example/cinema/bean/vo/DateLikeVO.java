@@ -5,14 +5,10 @@ import com.example.cinema.dao.po.DateLike;
 import java.sql.Date;
 
 public class DateLikeVO {
-    /**
-     * 喜爱人数
-     */
+    //喜爱人数
     private int likeNum;
 
-    /**
-     * 喜爱时间
-     */
+    //喜爱时间
     private Date likeTime;
 
     public DateLikeVO(DateLike dateLike){

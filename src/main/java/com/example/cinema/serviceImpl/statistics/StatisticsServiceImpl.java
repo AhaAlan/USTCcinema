@@ -13,21 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
-    @Autowired
+    @Resource
     private StatisticsMapper statisticsMapper;
-    @Autowired
+    @Resource
     private HallMapper hallMapper;
-    @Autowired
+    @Resource
     private MovieMapper movieMapper;
-    @Autowired
+    @Resource
     private ScheduleMapper scheduleMapper;
-    @Autowired
+    @Resource
     private TicketMapper ticketMapper;
+
     @Override
     public ResponseVO getScheduleRateByDate(Date date) {
         try{
@@ -37,7 +39,6 @@ public class StatisticsServiceImpl implements StatisticsService {
             }
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             requireDate = simpleDateFormat.parse(simpleDateFormat.format(requireDate));
-
             Date nextDate = getNumDayAfterDate(requireDate, 1);
             return ResponseVO.buildSuccess(movieScheduleTimeList2MovieScheduleTimeVOList(statisticsMapper.selectMovieScheduleTimes(requireDate, nextDate)));
 
@@ -62,7 +63,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
-            Date startDate = getNumDayAfterDate(today, -6);
+            Date startDate = getNumDayAfterDate(today, -6);//六天前的日期，也就是本次统计的开始日期
             List<AudiencePriceVO> audiencePriceVOList = new ArrayList<>();
             for(int i = 0; i < 7; i++){
                 AudiencePriceVO audiencePriceVO = new AudiencePriceVO();
@@ -82,7 +83,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ResponseVO getMoviePlacingRateByDate(Date date) {
-        //接口见接口说明
         try {
             List<PlacingRateVO> placingRateVOList=new ArrayList<>();
             List<Hall> hall= hallMapper.selectAllHall();
@@ -108,7 +108,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                 }
                 List<Ticket> tickets=ticketMapper.selectTicketByDate(firstday,secondday);
                 double totalviewer=tickets.size();
-                double result=0;
+                double result;
                 if(totalmovietime==0 || m==0 || n==0 ||totalviewer==0){
                     result=0;
                 }
@@ -130,7 +130,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ResponseVO getPopularMovies(int days, int movieNum) {
-        //接口见接口说明
         try{
             Date current=new Date();
             current.getTime();
@@ -155,19 +154,13 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
 
-    /**
-     * 获得num天后的日期
-     * @param oldDate
-     * @param num
-     * @return
-     */
-    Date getNumDayAfterDate(Date oldDate, int num){
+    //获得num天后的日期
+    private Date getNumDayAfterDate(Date oldDate, int num){
         Calendar calendarTime = Calendar.getInstance();
         calendarTime.setTime(oldDate);
         calendarTime.add(Calendar.DAY_OF_YEAR, num);
         return calendarTime.getTime();
     }
-
 
 
     private List<MovieScheduleTimeVO> movieScheduleTimeList2MovieScheduleTimeVOList(List<MovieScheduleTime> movieScheduleTimeList){

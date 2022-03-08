@@ -2,6 +2,7 @@ package com.example.cinema.bean.vo;
 
 import java.util.Date;
 
+//上座率VO类
 public class PlacingRateVO {
     //某日电影总的上座率
     private double placingrate;

@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.cinema.dao.mapper.statistics.CommentMapper">
 
-    <insert id="insertOneComment" parameterType="com.example.cinema.dao.po.Comment"
-            useGeneratedKeys="true">
+    <insert id="insertOneComment" parameterType="com.example.cinema.dao.po.Comment" useGeneratedKeys="true">
         insert into comment(`name`,content,`time`,movie_id)
         values(#{name}, #{content},#{time},#{movieId})
     </insert>
@@ -13,9 +12,10 @@
     </select>
 
     <resultMap id="Comment" type="com.example.cinema.dao.po.Comment">
-        <result column="name" property="name"></result>
-        <result column="content" property="content"></result>
-        <result column="time" property="time"></result>
-        <result column="movie_id" property="movieId"></result>
+        <result column="name" property="name"/>
+        <result column="content" property="content"/>
+        <result column="time" property="time"/>
+        <result column="movie_id" property="movieId"/>
     </resultMap>
+
 </mapper>

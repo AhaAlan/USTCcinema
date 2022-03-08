@@ -4,6 +4,7 @@ package com.example.cinema.bean.vo;
 import java.sql.Timestamp;
 import java.util.List;
 
+//订单类对应的VO
 public class OrderFormVO {
     private int userId;
     private int orderformId;
@@ -44,7 +45,6 @@ public class OrderFormVO {
     public int getUserId(){
         return userId;
     }
-
 
     public int getCouponId(){
         return couponId;

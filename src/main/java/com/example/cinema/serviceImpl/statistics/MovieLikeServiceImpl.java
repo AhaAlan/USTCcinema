@@ -32,30 +32,28 @@ public class MovieLikeServiceImpl implements MovieLikeService {
 
     @Override
     public ResponseVO likeMovie(int userId, int movieId) {
-
-        //todo: user 判空
+        //标记用户是否存在
         int flag=0;
         List<User> users=accountMapper.selectAllUser();
-        for(int i=0;i<users.size();i++){
-            if (userId==users.get(i).getId()){
-                flag=0;
+        for (User user : users) {
+            if (userId == user.getId()) {
+                flag = 0;
                 break;
-            }
-            else{
-                flag=1;
+            } else {
+                flag = 1;
             }
         }
         if (userLikeTheMovie(userId, movieId)) {
             return ResponseVO.buildFailure(ALREADY_LIKE_ERROR_MESSAGE);
         } else if (movieService.getMovieById(movieId) == null) {
             return ResponseVO.buildFailure(MOVIE_NOT_EXIST_ERROR_MESSAGE);
-        }
-        else if(flag==1){
+        } else if(flag==1){
             return ResponseVO.buildFailure(User_NOT_EXIST_ERROR_MESSAGE);
         }
+
         try {
             return ResponseVO.buildSuccess(movieLikeMapper.insertOneLike(movieId, userId));
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
@@ -74,7 +72,6 @@ public class MovieLikeServiceImpl implements MovieLikeService {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
-
     }
 
     @Override
@@ -97,11 +94,13 @@ public class MovieLikeServiceImpl implements MovieLikeService {
         }
     }
 
+    //判断用户是否喜欢该电电影
     private boolean userLikeTheMovie(int userId, int movieId) {
-        return movieLikeMapper.selectLikeMovie(movieId, userId) == 0 ? false : true;
+        return movieLikeMapper.selectLikeMovie(movieId, userId) != 0;
     }
     
 
+    //带日期的喜爱列表类转对应的VO类
     private List<DateLikeVO> dateLikeList2DateLikeVOList(List<DateLike> dateLikeList){
         List<DateLikeVO> dateLikeVOList = new ArrayList<>();
         for(DateLike dateLike : dateLikeList){

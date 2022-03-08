@@ -106,7 +106,7 @@ public class OrderFormServiceImpl implements OrderFormService {
                 orderFormMapper.updateOrderFormState(orderFormId, 1);
                 return ResponseVO.buildSuccess();
             }else{
-                double refund = 0;
+                double refund;
                 int ticketNumber = orderForm.getTickets().size();
                 Ticket ticket1 = orderForm.getTickets().get(0);
                 Coupon coupon = couponMapper.selectById(orderForm.getCouponId());
@@ -126,7 +126,7 @@ public class OrderFormServiceImpl implements OrderFormService {
                     int deadline = refund1.getDeadline();
                     if (n < deadline) {
                         return ResponseVO.buildFailure("此订单已超过退票最后时间，无法退票");
-                    }else if (n < timeTwo & n >= deadline) {
+                    }else if (n < timeTwo) {
                         double deadlinePercent = refund1.getDeadlinePercent();
                         vipCardMapper.updateCardBalance(vipcard.getId(), vipcard.getBalance() + refund * deadlinePercent);
                         orderFormMapper.updateOrderFormState(orderFormId, 1);
@@ -165,41 +165,49 @@ public class OrderFormServiceImpl implements OrderFormService {
     @Override
     public ResponseVO getOrderFormByUser(int userId){
         try {
+            //该用户的所有订单信息，存放在list中
             List<OrderForm> orderForms = orderFormMapper.selectOrderFormByUserId(userId);
             if(orderForms.size()==0){
                 return ResponseVO.buildSuccess("您还没有购买过电影票哦 ");
             }
             else {
+                //获取订单列表的首个订单，查找该订单的电影票列表的首个电影票的排片id，根据该id获取电影名
                 String movieName = scheduleMapper.selectScheduleById(orderForms.get(0).getTickets().get(0).getScheduleId()).getMovieName();
-                List<OrderFormWithMovieVO> orderFormVOS = new ArrayList<>();
+                //本质是把List<OrderForm>转换为List<OrderFormWithMovieVO>
+                List<OrderFormWithMovieVO> orderFormVOList = new ArrayList<>();
                 for (int i = 0; i < orderForms.size(); i++) {
                     OrderFormWithMovieVO orderFormWithMovieVO = new OrderFormWithMovieVO();
                     orderFormWithMovieVO.setCouponId(orderForms.get(i).getCouponId());
                     orderFormWithMovieVO.setOrderformId(orderForms.get(i).getOrderformId());
                     orderFormWithMovieVO.setPaypath(orderForms.get(i).getPaypath());
                     orderFormWithMovieVO.setState(orderForms.get(i).getState());
-                    List<TicketVO> ticketVOS = new ArrayList<>();
+                    //这里本质上是把Ticket转化为TicketVO
+                    List<TicketVO> ticketVOList = new ArrayList<>();
                     for (int j = 0; j < orderForms.get(i).getTickets().size(); j++) {
-                        ticketVOS.add(orderForms.get(i).getTickets().get(j).getVO());
+                        ticketVOList.add(orderForms.get(i).getTickets().get(j).getVO());
                     }
-                    orderFormWithMovieVO.setTicketNumber(ticketVOS.size());
-                    orderFormWithMovieVO.setTickets(ticketVOS);
+                    orderFormWithMovieVO.setTicketNumber(ticketVOList.size());
+                    orderFormWithMovieVO.setTickets(ticketVOList);
                     orderFormWithMovieVO.setMovieName(movieName);
                     orderFormWithMovieVO.setTime(orderForms.get(i).getTime());
                     orderFormWithMovieVO.setUserId(orderForms.get(i).getUserId());
-                    orderFormVOS.add(orderFormWithMovieVO);
+                    orderFormVOList.add(orderFormWithMovieVO);
                 }
-                return ResponseVO.buildSuccess(orderFormVOS);
+                return ResponseVO.buildSuccess(orderFormVOList);
             }
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
     }
+
+    @Override
     public ResponseVO getOrderFormById(int Id){
         try {
+            //获取对应id的订单类
             OrderForm orderForm = orderFormMapper.selectOrderFormById(Id);
             String movieName = scheduleMapper.selectScheduleById(orderForm.getTickets().get(0).getScheduleId()).getMovieName();
+            //本质上是OrderForm转换为orderFormWithMovieScheduleCouponVO类
             OrderFormWithMovieScheduleCouponVO orderFormWithMovieScheduleCouponVO = new OrderFormWithMovieScheduleCouponVO();
             orderFormWithMovieScheduleCouponVO.setCouponId(orderForm.getCouponId());
             orderFormWithMovieScheduleCouponVO.setOrderformId(orderForm.getOrderformId());
