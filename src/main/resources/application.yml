@@ -11,7 +11,9 @@ spring:
     cache: false
   jackson:
     time-zone: GMT+8
+  messages:
+    basename: i18n.login
+
 
 mybatis:
   mapper-locations: classpath:dao/mapper/*/*Mapper.xml
-

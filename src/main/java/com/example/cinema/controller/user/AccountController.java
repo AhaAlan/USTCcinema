@@ -43,6 +43,7 @@ public class AccountController {
         return ResponseVO.buildSuccess(user);
     }
 
+    //返回首页index.html
     @PostMapping("/logout")
     public String logOut(HttpSession session){
         session.removeAttribute(InterceptorConfiguration.SESSION_KEY);

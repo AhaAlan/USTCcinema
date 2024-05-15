@@ -1,5 +1,6 @@
 package com.example.cinema.dao.mapper.management;
 
+import com.example.cinema.dao.po.Activity;
 import com.example.cinema.dao.po.Hall;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,4 +18,5 @@ public interface HallMapper {
     List<Hall> selectAllHall();
     //根据id查询影厅
     Hall selectHallById(@Param("hallId") int hallId);
+
 }
